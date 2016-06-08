@@ -8,7 +8,7 @@ except ImportError:
     sys.exit(1)
 
 
-DELIMITERS = ['_', '-', ',', '|', '`', '(', ')', '[', ']', '>', '<', '.', '#', '*']
+DELIMITERS = ['_', '-', ',', '|', '`', '(', ')', '[', ']', '>', '<', '/', '#', '*', '+']
 
 
 def move(direction, count=1):
@@ -113,8 +113,14 @@ def move(direction, count=1):
         # unless it is the same delimiter as before.
         should_continue = True
         for delimiter in DELIMITERS:
-            if char == delimiter and start_char != delimiter:
-                should_continue = False
+            if char == delimiter:
+                if delimiter == start_char and moved > 0:
+                    should_continue = False
+                    break
+                elif moved > 0:
+                    should_continue = False
+                    break
+
         if not should_continue:
             break
 
