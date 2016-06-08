@@ -1,12 +1,25 @@
 # Vim-Nav
 
-Simple navigation in Vim
+Smart, horizontal navigation in vim.
 
 ![image]()
 
-**vim-nav** is a simple plugin that hijacks `b` and `e` for smarter navigation between characters. **vim-nav** allows you to navigate through snake case, camel case and normal word breaks. Break characters are also configurable for custom navigation.
+`vim-nav` is a simple plugin that hijacks `b` and `e` for smarter navigation between characters. **vim-nav** allows you to navigate through snake case, camel case and normal word breaks. Break characters are also configurable for custom navigation.
 
-**vim-nav** works by replacing the `b` and `e` mappings in normal mode.
+`vim-nav` works by replacing the `b` and `e` mappings in normal mode.
+
+## Installation
+
+`vim-nav` should work with your vim plugin dependency manager. The recommended way to install `vim-nav` is using the [vundle]() plugin manager.
+
+Simply add this to your `vundle` config:
+
+```vim
+Plugin 'jonmorehouse/vim-nav'
+```
+
+And then run `:PluginInstall` from within a `vim` session to install.
+
 
 ## FAQ
 
