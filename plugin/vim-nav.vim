@@ -24,6 +24,8 @@ EOF
 
 " map b in normal mode to nav.backwards()
 nmap b :python nav.backwards()<CR>
+"nmap b :normal n.:python nav.backwards()<CR>
 
 " map e in normal mode to nav.forwards()
 nmap e :python nav.forwards()<CR>
+"nmap e :normal n.:python nav.backwards()<CR>

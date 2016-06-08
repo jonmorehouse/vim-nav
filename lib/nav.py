@@ -8,7 +8,7 @@ except ImportError:
     sys.exit(1)
 
 
-DELIMITERS = ['_', '-', ',', '|', '`', '(', ')', '[', ']']
+DELIMITERS = ['_', '-', ',', '|', '`', '(', ')', '[', ']', '>', '<', '/', '#', '*', '+']
 
 
 def move(direction, count=1):
@@ -40,21 +40,30 @@ def move(direction, count=1):
     moved = 0
 
     while True:
-        try:
-            line = buf[row]
-        except IndexError:
-            # we reached the end of the file
-            row = row-direction
-            col = len(buf[row])
+        # check going out of bounds on the row, this denotes that we have
+        # reached an edge of the file
+        if row < 0:
+            row = 0
+            col = 0
+            break
+        elif row > len(buf) - 1:
+            row = len(buf) - 1 
+            col = len(buf[row]) - 1
             break
 
-        try:
-            char = line[col]
-        except IndexError:
-            # we reached the end of the line, onto the next line
-            row = row + direction
-            col = 0
+        # check going out of bounds on an individual line, as this denotes we
+        # need to go up or down
+        if col < 0:
+            row -= 1
+            col = len(buf[row]) - 1 
             continue
+        elif col >= len(buf[row]):
+            row += direction
+            col = 0 if direction == 1 else len(buf[row])-1
+            continue
+
+        line = buf[row]
+        char = buf[row][col]
 
         # we have an actual character which we can compare to our logic to see
         # if we should break
@@ -68,23 +77,53 @@ def move(direction, count=1):
         # if we hit a white space on the first element, then we want to keep
         # going to find the next non-whitespace element
         if re.match(r'\s', char) or re.match(r'\n', char):
-            # if we've moved more than a single character then go back to the
-            # previous element if it is in the range on the current line
-            if moved > 0 and col-direction > 0 and col-direction < len(line):
+            if moved > 0:
                 col -= direction
+                # if col is less than zero, it means we are moving forward and
+                # the last position was the last character of the previous
+                # line
+                if col < 0 and row > 0:
+                    row -= 1
+                    col = len(buf[row])-1
+                    # if col is greater, than we are moving from right to left
+                    # (because this is a backwards step) and that means the logical
+                    # previous position was the first character of the previous
+                    # line
+                elif col >= len(buf[row])-1 and row < len(buf)-2:
+                    row += 1
+                    col = 0
                 break
             else:
                 is_empty = True
+
+        # if we've move more than one character, are going backwards and are on
+        # the first element in a list then we can break 
+        if col == 0 and direction == -1 and moved > 0:
+            break
+
+        # if we've moved more than one character to the right and are on the end of a line we can break
+        if col == len(buf[row])-1 and direction == 1 and moved > 0:
+            break
 
         # the current character has a different case than the start char
         if (char.lower() == char) != (start_char == start_char.lower()):
             break
             
-        # if the current character is one of our delimiter characters break!
-        if char in DELIMITERS:
+        # if the current character is one of our delimiter characters break,
+        # unless it is the same delimiter as before.
+        should_continue = True
+        for delimiter in DELIMITERS:
+            if char == delimiter:
+                if delimiter == start_char and moved > 0:
+                    should_continue = False
+                    break
+                elif moved > 0:
+                    should_continue = False
+                    break
+
+        if not should_continue:
             break
 
-        # no match, we just move to the right once
         col += direction
         moved += 1
 
