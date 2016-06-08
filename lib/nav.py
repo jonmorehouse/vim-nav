@@ -77,7 +77,7 @@ def move(direction, count=1):
         # if we hit a white space on the first element, then we want to keep
         # going to find the next non-whitespace element
         if re.match(r'\s', char) or re.match(r'\n', char):
-            if moved > 0:
+            if moved > 1:
                 col -= direction
                 # if col is less than zero, it means we are moving forward and
                 # the last position was the last character of the previous
@@ -94,7 +94,10 @@ def move(direction, count=1):
                     col = 0
                 break
             else:
+                moved += 1
+                col += direction
                 is_empty = True
+                continue
 
         # if we've move more than one character, are going backwards and are on
         # the first element in a list then we can break 
@@ -106,7 +109,9 @@ def move(direction, count=1):
             break
 
         # the current character has a different case than the start char
-        if (char.lower() == char) != (start_char == start_char.lower()):
+        if start_char == start_char.lower() and char == char.upper():
+            break
+        if start_char == start_char.upper() and char == char.upper() and moved > 0:
             break
             
         # if the current character is one of our delimiter characters break,
@@ -129,6 +134,7 @@ def move(direction, count=1):
 
     # move to the correct character
     vim.current.window.cursor = (row+1, col)
+    return move(direction, count-1)
 
 
 def forwards(count=1):

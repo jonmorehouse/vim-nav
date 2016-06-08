@@ -2,7 +2,8 @@
 
 Smarter, horizontal navigation in vim.
 
-[![asciicast](https://asciinema.org/a/8dtiq6m4fzoh7fgz872g5oi0s.png)](https://asciinema.org/a/8dtiq6m4fzoh7fgz872g5oi0s)
+
+[![asciicast](https://asciinema.org/a/7ewafmt0dx3ruwjphpwew1c8g.png)](https://asciinema.org/a/7ewafmt0dx3ruwjphpwew1c8g?autoplay=1)
 
 `vim-nav` is a simple plugin that hijacks `b` and `e` for smarter navigation between characters. **vim-nav** allows you to navigate through snake case, camel case and normal word breaks. Break characters are also configurable for custom navigation.
 
