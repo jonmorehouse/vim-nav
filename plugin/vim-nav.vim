@@ -23,8 +23,8 @@ import nav
 EOF
 
 " map b in normal mode to nav.backwards()
-"nmap b :python nav.backwards()<CR>
+"nmap b :python3 nav.backwards()<CR>
 "nmap b @dd
 
-:nnoremap b :<C-U>exe ":python nav.backwards(count=".v:count1.")"<CR>
-:nnoremap e :<C-U>exe ":python nav.forwards(count=".v:count1.")"<CR>
+:nnoremap b :<C-U>exe ":python3 nav.backwards(count=".v:count1.")"<CR>
+:nnoremap e :<C-U>exe ":python3 nav.forwards(count=".v:count1.")"<CR>
