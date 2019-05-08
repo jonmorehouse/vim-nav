@@ -6,12 +6,12 @@ let g:vim_nav_loaded = 1
 
 """ vim nav requres python support. This should be fairly standard amongst
 """ most vim installations.
-if !has("python")
-  echo "vim-nav requires python support"
+if !has("python3")
+  echo "vim-nav requires python3 support"
   finish
 endif
 
-python <<EOF
+python3 <<EOF
 from os import path as p
 import sys
 import vim

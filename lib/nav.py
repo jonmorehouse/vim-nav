@@ -4,7 +4,7 @@ import sys
 try:
     import vim
 except ImportError:
-    print "this must be called within the vim runtime..."
+    print("this must be called within the vim runtime...")
     sys.exit(1)
 
 
@@ -25,10 +25,10 @@ def move(direction, count=1):
 
     # check to make sure that the start character exists
     try:
-        start_char = buf[start_row -1][start_col] 
+        start_char = buf[start_row -1][start_col]
     except IndexError:
         start_char = None
-    
+
     # if the character is currently a whiteSpace, then we just walk to the
     # right until we find a non-whitespace character. A white space is either
     # an empty cursor / line or an actual space
@@ -47,7 +47,7 @@ def move(direction, count=1):
             col = 0
             break
         elif row > len(buf) - 1:
-            row = len(buf) - 1 
+            row = len(buf) - 1
             col = len(buf[row]) - 1
             break
 
@@ -55,7 +55,7 @@ def move(direction, count=1):
         # need to go up or down
         if col < 0:
             row -= 1
-            col = len(buf[row]) - 1 
+            col = len(buf[row]) - 1
             continue
         elif col >= len(buf[row]):
             row += direction
@@ -100,7 +100,7 @@ def move(direction, count=1):
                 continue
 
         # if we've move more than one character, are going backwards and are on
-        # the first element in a list then we can break 
+        # the first element in a list then we can break
         if col == 0 and direction == -1 and moved > 0:
             break
 
@@ -113,7 +113,7 @@ def move(direction, count=1):
             break
         if start_char == start_char.upper() and char == char.upper() and moved > 0:
             break
-            
+
         # if the current character is one of our delimiter characters break,
         # unless it is the same delimiter as before.
         should_continue = True
